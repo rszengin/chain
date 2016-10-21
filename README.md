@@ -1,4 +1,4 @@
-# chain
+# cmp::chain
 ### The Chained Comparison
 In C++ chained comparisons like ‘X<=Y<=Z’ do not have their mathematical meaning. The standard describes this behaviour (§5.9.1) about relational operators. But normal human intention while writing and intended meaning while reading an expression like this is equivalent to mathematical. We can observe this fact on beginners' errors. Meeting this expectation is easy with addition of a simple code. Compiler optimizes away the abstraction. So, the end result is the same.
 
