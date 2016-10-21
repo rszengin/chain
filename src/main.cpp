@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <cstdlib>
 #include <ctime>
 #include "chain.hpp"
@@ -15,17 +16,18 @@
 
 int main() {
 
-	for (int inx = 0; inx < 20; ++inx) {
-		if (cmp::chain < 5 <= inx < 15)
-			std::cout << inx << " ";
-	}
-	std::cout << std::endl;
+    std::vector<int> numbers(20);
+    std::generate(numbers.begin(), numbers.end(), [](){return double(std::rand()) * 20 / RAND_MAX;});
 
-	for (int inx = 0; inx < 20; ++inx) {
-		if (5 <= inx && inx < 15)
-			std::cout << inx << " ";
-	}
-	std::cout << std::endl;
+    for (auto x : numbers)
+		if (cmp::chain < 5 <= x < 15)
+			std::cout << x << " ";
+    std::cout << std::endl;
+
+    for (auto x : numbers)
+    	if (5 <= x && x < 15)
+			std::cout << x << " ";
+    std::cout << std::endl;
 
 	std::vector<std::string> words { "aback", "abaft", "abandon", "abandoned",
 			"abandonment", "abase", "abash", "abashment", "abate", "abatement",
@@ -79,7 +81,7 @@ int main() {
 	}
 	std::cout << std::endl;
 
-	std::srand(std::time(nullptr));
+	std::srand(0);
 	for (int inx = 0; inx < 1000; ++inx) {
 		double a = double(std::rand()) / RAND_MAX;
 		double b = double(std::rand()) / RAND_MAX;
@@ -91,7 +93,7 @@ int main() {
 		}
 	}
 
-	std::srand(std::time(nullptr));
+	std::srand(0);
 	for (int inx = 0; inx < 1000; ++inx) {
 		double a = double(std::rand()) / RAND_MAX;
 		double b = double(std::rand()) / RAND_MAX;
