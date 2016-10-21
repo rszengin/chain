@@ -8,16 +8,21 @@
 
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 #include "chain.hpp"
-using namespace std;
+
 
 int main() {
 
 	for (int inx = 0; inx < 20; ++inx) {
-		if (cmp::chain < 5 < inx < 15)
+		if (cmp::chain < 5 <= inx < 15)
 			std::cout << inx << " ";
+	}
+	std::cout << std::endl;
 
-		if ((5 < inx) && (inx < 15))
+	for (int inx = 0; inx < 20; ++inx) {
+		if (5 <= inx && inx < 15)
 			std::cout << inx << " ";
 	}
 	std::cout << std::endl;
@@ -63,10 +68,40 @@ int main() {
 			"acidulous", "acknowledge", "acknowledgment", "acme", "acolyte" };
 
 	for (auto& x : words) {
-		if (cmp::chain < "abb" < x < "abe")
+		if (cmp::chain < "abb" <= x < "abe")
 			std::cout << x << " ";
 	}
 	std::cout << std::endl;
+
+	for (auto& x : words) {
+		if ("abb" <= x && x < "abe")
+			std::cout << x << " ";
+	}
+	std::cout << std::endl;
+
+	std::srand(std::time(nullptr));
+	for (int inx = 0; inx < 1000; ++inx) {
+		double a = double(std::rand()) / RAND_MAX;
+		double b = double(std::rand()) / RAND_MAX;
+		double c = double(std::rand()) / RAND_MAX;
+
+		if(cmp::chain < 0.4 < a <= b <= c < 0.6) {
+			std::cout << "Round "<< inx << ") Variables in the range : " <<
+					a << " <= " << b << " <= " << c << "\n";
+		}
+	}
+
+	std::srand(std::time(nullptr));
+	for (int inx = 0; inx < 1000; ++inx) {
+		double a = double(std::rand()) / RAND_MAX;
+		double b = double(std::rand()) / RAND_MAX;
+		double c = double(std::rand()) / RAND_MAX;
+
+		if(0.4 < a && a <= b && b <= c && c < 0.6) {
+			std::cout << "Round "<< inx << ") Variables in the range : " <<
+					a << " <= " << b << " <= " << c << "\n";
+		}
+	}
 
 	return 0;
 }

@@ -11,15 +11,27 @@
 namespace cmp {
 
 template<typename LType>
-class Operate {
+class Comparator {
 	const LType& lhs_;
 	const bool result_;
 public:
-	Operate(const LType& lhs, const bool result) : lhs_(lhs), result_(result){}
+	Comparator(const LType& lhs, const bool result) : lhs_(lhs), result_(result){}
 
 	template<typename RType>
-	Operate<RType> operator <(const RType& rhs) const {
-		return Operate<RType>(rhs, result_ && (lhs_ < rhs));
+	Comparator<RType> operator <(const RType& rhs) const {
+		return Comparator<RType>(rhs, result_ && (lhs_ < rhs));
+	}
+	template<typename RType>
+	Comparator<RType> operator <=(const RType& rhs) const {
+		return Comparator<RType>(rhs, result_ && (lhs_ <= rhs));
+	}
+	template<typename RType>
+	Comparator<RType> operator >(const RType& rhs) const {
+		return Comparator<RType>(rhs, result_ && (lhs_ > rhs));
+	}
+	template<typename RType>
+	Comparator<RType> operator >=(const RType& rhs) const {
+		return Comparator<RType>(rhs, result_ && (lhs_ >= rhs));
 	}
 
 	inline operator bool() const {
@@ -27,14 +39,26 @@ public:
 	}
 };
 
-struct Initiate {
+struct Initiator {
 	template<typename RType>
-	Operate<RType> operator <(const RType& rhs) const {
-		return Operate<RType>(rhs, true);
+	Comparator<RType> operator <(const RType& rhs) const {
+		return Comparator<RType>(rhs, true);
+	}
+	template<typename RType>
+	Comparator<RType> operator <=(const RType& rhs) const {
+		return Comparator<RType>(rhs, true);
+	}
+	template<typename RType>
+	Comparator<RType> operator >(const RType& rhs) const {
+		return Comparator<RType>(rhs, true);
+	}
+	template<typename RType>
+	Comparator<RType> operator >=(const RType& rhs) const {
+		return Comparator<RType>(rhs, true);
 	}
 };
 
-const Initiate chain {};
+constexpr Initiator chain {};
 
 } /* namespace cmp */
 
