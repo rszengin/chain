@@ -1,9 +1,10 @@
-/*
- * chain.hpp
- *
- *  Created on: 20 Eki 2016
- *      Author: RSZ
- */
+//============================================================================
+// Name        : chain.hpp
+// Author      : Rahman Salim Zengin
+// Version     :
+// Copyright   : rsz@gufatek.com
+// Description : Chained comparison implementation
+//============================================================================
 
 #ifndef CHAIN_HPP_
 #define CHAIN_HPP_
