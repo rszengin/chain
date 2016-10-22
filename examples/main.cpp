@@ -19,11 +19,25 @@ int main() {
     std::vector<int> numbers(20);
     std::generate(numbers.begin(), numbers.end(), [](){return double(std::rand()) * 20 / RAND_MAX;});
 
+    // Ascending numeric range example
     for (auto x : numbers)
 		if (cmp::chain < 5 <= x < 15)
 			std::cout << x << " ";
     std::cout << std::endl;
 
+    // Descending numeric range example
+    for (auto x : numbers)
+    	if (cmp::chain > 15 > x >= 5)
+			std::cout << x << " ";
+    std::cout << std::endl;
+
+//    // Compilation error
+//    for (auto x : numbers)
+//		if (cmp::chain > 5 <= x > 15)
+//			std::cout << x << " ";
+//    std::cout << std::endl;
+
+    // For comparison of the resulting machine code
     for (auto x : numbers)
     	if (5 <= x && x < 15)
 			std::cout << x << " ";
@@ -69,18 +83,28 @@ int main() {
 			"achingly", "achy", "acid", "acidic", "acidity", "acidness",
 			"acidulous", "acknowledge", "acknowledgment", "acme", "acolyte" };
 
+	// Ascending string range example
 	for (auto& x : words) {
 		if (cmp::chain < "abb" <= x < "abe")
 			std::cout << x << " ";
 	}
 	std::cout << std::endl;
 
+	// Descending string range example
+	for (auto& x : words) {
+		if (cmp::chain > "abe" > x >= "abb")
+			std::cout << x << " ";
+	}
+	std::cout << std::endl;
+
+	// For comparison of the resulting machine code
 	for (auto& x : words) {
 		if ("abb" <= x && x < "abe")
 			std::cout << x << " ";
 	}
 	std::cout << std::endl;
 
+	// Combined fractional range check
 	std::srand(0);
 	for (int inx = 0; inx < 1000; ++inx) {
 		double a = double(std::rand()) / RAND_MAX;
@@ -93,6 +117,7 @@ int main() {
 		}
 	}
 
+	// For comparison of the resulting machine code
 	std::srand(0);
 	for (int inx = 0; inx < 1000; ++inx) {
 		double a = double(std::rand()) / RAND_MAX;
