@@ -11,28 +11,48 @@
 
 namespace cmp {
 
-template<typename LType>
+enum class Order {Ascending, Descending};
+
+template<typename LType, Order>
 class Comparator {
+	Comparator() = delete;
+};
+
+template<typename LType>
+class Comparator<LType, Order::Ascending> {
 	const LType& lhs_;
 	const bool result_;
 public:
 	Comparator(const LType& lhs, const bool result) : lhs_(lhs), result_(result){}
 
 	template<typename RType>
-	Comparator<RType> operator <(const RType& rhs) const {
-		return Comparator<RType>(rhs, result_ && (lhs_ < rhs));
+	Comparator<RType, Order::Ascending> operator <(const RType& rhs) const {
+		return Comparator<RType, Order::Ascending>(rhs, result_ && (lhs_ < rhs));
 	}
 	template<typename RType>
-	Comparator<RType> operator <=(const RType& rhs) const {
-		return Comparator<RType>(rhs, result_ && (lhs_ <= rhs));
+	Comparator<RType, Order::Ascending> operator <=(const RType& rhs) const {
+		return Comparator<RType, Order::Ascending>(rhs, result_ && (lhs_ <= rhs));
+	}
+
+	inline operator bool() const {
+		return result_;
+	}
+};
+
+template<typename LType>
+class Comparator<LType, Order::Descending> {
+	const LType& lhs_;
+	const bool result_;
+public:
+	Comparator(const LType& lhs, const bool result) : lhs_(lhs), result_(result){}
+
+	template<typename RType>
+	Comparator<RType, Order::Descending> operator >(const RType& rhs) const {
+		return Comparator<RType, Order::Descending>(rhs, result_ && (lhs_ > rhs));
 	}
 	template<typename RType>
-	Comparator<RType> operator >(const RType& rhs) const {
-		return Comparator<RType>(rhs, result_ && (lhs_ > rhs));
-	}
-	template<typename RType>
-	Comparator<RType> operator >=(const RType& rhs) const {
-		return Comparator<RType>(rhs, result_ && (lhs_ >= rhs));
+	Comparator<RType, Order::Descending> operator >=(const RType& rhs) const {
+		return Comparator<RType, Order::Descending>(rhs, result_ && (lhs_ >= rhs));
 	}
 
 	inline operator bool() const {
@@ -42,20 +62,12 @@ public:
 
 struct Initiator {
 	template<typename RType>
-	Comparator<RType> operator <(const RType& rhs) const {
-		return Comparator<RType>(rhs, true);
+	Comparator<RType, Order::Ascending> operator <(const RType& rhs) const {
+		return Comparator<RType, Order::Ascending>(rhs, true);
 	}
 	template<typename RType>
-	Comparator<RType> operator <=(const RType& rhs) const {
-		return Comparator<RType>(rhs, true);
-	}
-	template<typename RType>
-	Comparator<RType> operator >(const RType& rhs) const {
-		return Comparator<RType>(rhs, true);
-	}
-	template<typename RType>
-	Comparator<RType> operator >=(const RType& rhs) const {
-		return Comparator<RType>(rhs, true);
+	Comparator<RType, Order::Descending> operator >(const RType& rhs) const {
+		return Comparator<RType, Order::Descending>(rhs, true);
 	}
 };
 
