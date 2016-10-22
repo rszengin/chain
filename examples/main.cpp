@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
-#include "chain.hpp"
+#include "..\include\chain.hpp"
 
 
 int main() {
