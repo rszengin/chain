@@ -13,11 +13,20 @@
 
 namespace cmp {
 
+// Helper type for controlling of the chain order
 struct Order {
 	struct Ascending;
 	struct Descending;
 };
 
+/*
+ * "Conductor" object preserves information before and transfers it to the following.
+ * Operations should follow chain order.
+ * Ascending to ascending or descending to descending.
+ * Breaking the order will result in a compile time error.
+ * Mixes comparison order is not allowed.
+ * Internal state is constant after construction.
+ */
 template<typename LType, typename ChainOrder>
 class Conductor {
 	// lhs_ is rhs value of the previous operator
@@ -67,18 +76,30 @@ public:
 	}
 };
 
-
+/*
+ *	"Initiator" object starts comparison chaining and generates "Conductor" object.
+ *	First operator after the "Initiator" object determines ordering of the chain.
+ *	Starting with "<<" forces ascending order.
+ *	For Ascending order, only "<" and "<=" is allowed.
+ *	Starting with ">>" forces descending order.
+ *	For Descending order, only ">" and ">=" is allowed.
+ */
 struct Initiator {
 	template<typename RType>
-	Conductor<RType, Order::Ascending> operator <(const RType& rhs) const {
+	Conductor<RType, Order::Ascending> operator <<(const RType& rhs) const {
 		return Conductor<RType, Order::Ascending>(rhs, true);
 	}
 	template<typename RType>
-	Conductor<RType, Order::Descending> operator >(const RType& rhs) const {
+	Conductor<RType, Order::Descending> operator >>(const RType& rhs) const {
 		return Conductor<RType, Order::Descending>(rhs, true);
 	}
 };
 
+/*
+ * "chain" is the default "Initiator" instance. It doesn't have internal state.
+ * It is defined for ease and comfort. Usage of "Initiator {}" in place of "chain"
+ * is also possible.
+ */
 constexpr Initiator chain {};
 
 } /* namespace cmp */

@@ -21,19 +21,19 @@ int main() {
 
     // Ascending numeric range example
     for (auto x : numbers)
-		if (cmp::chain < 5 <= x < 15)
+		if (cmp::chain << 5 <= x < 15)
 			std::cout << x << " ";
     std::cout << std::endl;
 
     // Descending numeric range example
     for (auto x : numbers)
-    	if (cmp::chain > 15 > x >= 5)
+    	if (cmp::chain >> 15 > x >= 5)
 			std::cout << x << " ";
     std::cout << std::endl;
 
 //    // Compilation error
 //    for (auto x : numbers)
-//		if (cmp::chain > 5 <= x > 15)
+//		if (cmp::chain >> 5 <= x > 15)
 //			std::cout << x << " ";
 //    std::cout << std::endl;
 
@@ -85,14 +85,14 @@ int main() {
 
 	// Ascending string range example
 	for (auto& x : words) {
-		if (cmp::chain < "abb" <= x < "abe")
+		if (cmp::chain << "abb" <= x < "abe")
 			std::cout << x << " ";
 	}
 	std::cout << std::endl;
 
 	// Descending string range example
 	for (auto& x : words) {
-		if (cmp::chain > "abe" > x >= "abb")
+		if (cmp::chain >> "abe" > x >= "abb")
 			std::cout << x << " ";
 	}
 	std::cout << std::endl;
@@ -111,7 +111,7 @@ int main() {
 		double b = double(std::rand()) / RAND_MAX;
 		double c = double(std::rand()) / RAND_MAX;
 
-		if(cmp::chain < 0.4 < a <= b <= c < 0.6) {
+		if(cmp::chain << 0.4 < a <= b <= c < 0.6) {
 			std::cout << "Round "<< inx << ") Variables in the range : " <<
 					a << " <= " << b << " <= " << c << "\n";
 		}
