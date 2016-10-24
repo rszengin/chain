@@ -2,7 +2,16 @@
 ### The Chained Comparison
 In C++ chained comparisons like "X<=Y<=Z" do not have their mathematical meaning. The standard describes this behaviour (§5.9.1) about relational operators. But normal human intention while writing and intended meaning while reading an expression like this is equivalent to mathematical. We can observe this fact on beginners' errors. Meeting this expectation is possible via this simple chained comparison code. Compiler optimizes away the abstraction. So, the end result is the same.
 
-### Sample Usage
+### Usage
+Mixed ordering of comparison operators are not allowed. Comparisons can be chained only Ascending or Descending. "chain" is a default defined "Initiator" object for convenience. Every comparison chain starts with an Initiator object. 
+
+"<" operator following "Initiator" starts and forces an Ascending ordered comparison. In an Ascending ordered chain only operators of "<" and "<=" are allowed.
+
+">" operator following "Initiator" starts and forces a Descending ordered comparison. In a Descending ordered chain only operators of ">" and ">=" are allowed.
+
+Violation of these rules will result in a compile time error.
+
+### Examples
 Comparison chain is starts with the initiator object. It constructs the first comparator object with the first comparison operand.  Comparison operator of the comparator object returns result of the comparison operation with the second operand and a reference to the second operand as another comparator object. The process continues until the end of the comparison chain. At last, bool conversion operator of the last created comparator object returns the result of the comparison. It works with any type if there is a relational operator defined.
 
 ```C++

@@ -28,9 +28,8 @@ public:
 	Comparator(const LType& lhs, const bool result) : lhs_(lhs), result_(result){}
 
 	/*
-	 * These operators are not allowed for an Descending ordered comparison chain.
-	 * Usage of these operators in an Descending ordered comparison chain will
-	 * result in a compile time error.
+	 * These operators are only allowed for an "Ascending" ordered comparison chain.
+	 * Otherwise will result in a compile time error.
 	 */
 	template<typename RType>
 	Comparator<RType, Order::Ascending> operator <(const RType& rhs) const {
@@ -46,9 +45,8 @@ public:
 	}
 
 	/*
-	 * These operators are not allowed for an Ascending ordered comparison chain.
-	 * Usage of these operators in an Ascending ordered comparison chain will
-	 * result in a compile time error.
+	 * These operators are only allowed for an "Descending" ordered comparison chain.
+	 * Otherwise will result in a compile time error.
 	 */
 	template<typename RType>
 	Comparator<RType, Order::Descending> operator >(const RType& rhs) const {
