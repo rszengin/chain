@@ -16,12 +16,24 @@
 
 int main() {
 
+	const int a = 6;
+	const int b = 1;
+	std::srand(0);
+	int y = std::rand();
+	for (int inx = 0; inx < 20; ++inx, y = std::rand()) {
+		if (cmp::chain < 5 < y < 0)
+			std::cout << y << " ";
+		if (cmp::chain < a < y < b)
+			std::cout << y << " ";
+	}
+	std::cout << std::endl;
+
     std::vector<int> numbers(20);
     std::generate(numbers.begin(), numbers.end(), [](){return double(std::rand()) * 20 / RAND_MAX;});
 
     // Ascending numeric range example
-    for (auto x : numbers)
-		if (cmp::chain < 5 <= x < 15)
+    for (auto& x : numbers)
+		if (cmp::chain < 5 < x < 15)
 			std::cout << x << " ";
     std::cout << std::endl;
 
