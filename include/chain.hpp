@@ -19,29 +19,29 @@ struct Order {
 };
 
 template<typename LType, typename ChainOrder>
-class Comparator {
+class Conductor {
 	// lhs_ is rhs value of the previous operator
 	const LType& lhs_;
 	// result_ is the cumulative && of the previous comparisons
 	const bool result_;
 public:
-	Comparator(const LType& lhs, const bool result) : lhs_(lhs), result_(result){}
+	Conductor(const LType& lhs, const bool result) : lhs_(lhs), result_(result){}
 
 	/*
 	 * These operators are only allowed for an "Ascending" ordered comparison chain.
 	 * Otherwise will result in a compile time error.
 	 */
 	template<typename RType>
-	Comparator<RType, Order::Ascending> operator <(const RType& rhs) const {
+	Conductor<RType, Order::Ascending> operator <(const RType& rhs) const {
 		static_assert(std::is_same<ChainOrder, Order::Ascending>::value,
 				"Ambiguously ordered comparison chain");
-		return Comparator<RType, Order::Ascending>(rhs, result_ && (lhs_ < rhs));
+		return Conductor<RType, Order::Ascending>(rhs, result_ && (lhs_ < rhs));
 	}
 	template<typename RType>
-	Comparator<RType, Order::Ascending> operator <=(const RType& rhs) const {
+	Conductor<RType, Order::Ascending> operator <=(const RType& rhs) const {
 		static_assert(std::is_same<ChainOrder, Order::Ascending>::value,
 				"Ambiguously ordered comparison chain");
-		return Comparator<RType, Order::Ascending>(rhs, result_ && (lhs_ <= rhs));
+		return Conductor<RType, Order::Ascending>(rhs, result_ && (lhs_ <= rhs));
 	}
 
 	/*
@@ -49,16 +49,16 @@ public:
 	 * Otherwise will result in a compile time error.
 	 */
 	template<typename RType>
-	Comparator<RType, Order::Descending> operator >(const RType& rhs) const {
+	Conductor<RType, Order::Descending> operator >(const RType& rhs) const {
 		static_assert(std::is_same<ChainOrder, Order::Descending>::value,
 				"Ambiguously ordered comparison chain");
-		return Comparator<RType, Order::Descending>(rhs, result_ && (lhs_ > rhs));
+		return Conductor<RType, Order::Descending>(rhs, result_ && (lhs_ > rhs));
 	}
 	template<typename RType>
-	Comparator<RType, Order::Descending> operator >=(const RType& rhs) const {
+	Conductor<RType, Order::Descending> operator >=(const RType& rhs) const {
 		static_assert(std::is_same<ChainOrder, Order::Descending>::value,
 				"Ambiguously ordered comparison chain");
-		return Comparator<RType, Order::Descending>(rhs, result_ && (lhs_ >= rhs));
+		return Conductor<RType, Order::Descending>(rhs, result_ && (lhs_ >= rhs));
 	}
 
 
@@ -70,12 +70,12 @@ public:
 
 struct Initiator {
 	template<typename RType>
-	Comparator<RType, Order::Ascending> operator <(const RType& rhs) const {
-		return Comparator<RType, Order::Ascending>(rhs, true);
+	Conductor<RType, Order::Ascending> operator <(const RType& rhs) const {
+		return Conductor<RType, Order::Ascending>(rhs, true);
 	}
 	template<typename RType>
-	Comparator<RType, Order::Descending> operator >(const RType& rhs) const {
-		return Comparator<RType, Order::Descending>(rhs, true);
+	Conductor<RType, Order::Descending> operator >(const RType& rhs) const {
+		return Conductor<RType, Order::Descending>(rhs, true);
 	}
 };
 
