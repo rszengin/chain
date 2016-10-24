@@ -120,19 +120,19 @@ public:
  */
 struct Initiator {
 	template<typename RType>
-	Conductor<RType, Order::Ascending, Unknown_t> operator <(RType& rhs) const {
+	Conductor<RType, Order::Ascending, Unknown_t> operator <<(RType& rhs) const {
 		return Conductor<RType, Order::Ascending, Unknown_t>(rhs, true, Unknown_t {});
 	}
 	template<typename RType>
-	Conductor<RType, Order::Ascending, RType> operator <(RType&& rhs) const {
+	Conductor<RType, Order::Ascending, RType> operator <<(RType&& rhs) const {
 		return Conductor<RType, Order::Ascending, RType>(rhs, true, rhs);
 	}
 	template<typename RType>
-	Conductor<RType, Order::Descending, Unknown_t> operator >(RType& rhs) const {
+	Conductor<RType, Order::Descending, Unknown_t> operator >>(RType& rhs) const {
 		return Conductor<RType, Order::Descending, Unknown_t>(rhs, true, Unknown_t {});
 	}
 	template<typename RType>
-	Conductor<RType, Order::Descending, RType> operator >(RType&& rhs) const {
+	Conductor<RType, Order::Descending, RType> operator >>(RType&& rhs) const {
 		return Conductor<RType, Order::Descending, RType>(rhs, true, rhs);
 	}
 };
