@@ -1,6 +1,6 @@
 # chain
 ### The Chained Comparison
-In C++ chained comparisons like "X<=Y<=Z" do not have their mathematical meaning. The standard describes this behaviour (ง5.9.1) about relational operators. But normal human intention while writing and intended meaning while reading an expression like this is equivalent to mathematical. We can observe this fact on beginners' errors. Meeting this expectation is possible via this simple chained comparison code. Compiler optimizes away the abstraction. So, the end result is the same.
+In C++ chained comparisons like "X<=Y<=Z" do not have their mathematical meaning. The standard describes this behaviour (ยง5.9.1) about relational operators. But normal human intention while writing and intended meaning while reading an expression like this is equivalent to mathematical. We can observe this fact on beginners' errors. Meeting this expectation is possible via this simple chained comparison code. Compiler optimizes away the abstraction. So, the end result is the same.
 
 ### Usage
 Mixed ordering of comparison operators are not allowed. Comparisons can be chained only Ascending or Descending. "chain" is a default defined "Initiator" object for convenience. Every comparison chain starts with an Initiator object. 
@@ -51,16 +51,16 @@ for (int inx = 0; inx < 1000; ++inx) {
 
 ### Comparison of resulting machine code (using GCC -O1 flag)
 
-    | chained |     | standard
---- | ------- | --- | ---
+|   | chained |     | standard
+--- | :------ | --- | :---
 0x401678:|   mov     (%rdi),%edx          |0x4016be:|   mov     (%rbx),%edx
  35      |`if (cmp::chain << 5 <= x < 15)`   | 40      |`if (5 <= x && x < 15)`
 0x40167a:|   lea     -0x5(%rdx),%eax      |0x4016c0:|   lea     -0x5(%rdx),%eax
 0x40167d:|   cmp     $0x9,%eax            |0x4016c3:|   cmp     $0x9,%eax
 0x401680:|   ja      0x40169b `<main()+213>`|0x4016c6:|   ja      0x4016e1 `<main()+283>`
 
-    | chained |     | standard
---- | ------- | --- | ---
+|   | chained |     | standard
+--- | :------ | --- | :---
 102|`if(cmp::chain << 0.4 < a <= b <= c < 0.6)`|114|`if(0.4 < a && a <= b && b <= c && c < 0.6)`
 0x402e0e:|   ucomisd 0xa99b2(%rip),%xmm7 # 0x4ac7c8 |0x402f51:|   ucomisd %xmm7,%xmm6
 0x402e16:|   seta    %dl                            |0x402f55:|   setae   %dl
